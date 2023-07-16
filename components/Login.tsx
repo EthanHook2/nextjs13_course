@@ -1,19 +1,39 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 type Props = {};
 
 function Login({}: Props) {
-  const [user, setUser] = useState({
+  const router = useRouter();
+  const [user, setUser] = React.useState({
     email: "",
     password: "",
   });
+  const [buttonDisabled, setButtonDisabled] = React.useState(false);
 
-  // Signup function = Post to datbase via API route
-  const onLogin = async () => {};
+  const onLogin = async () => {
+    try {
+      const response =  await axios.post("/api/user/login", user)
+      console.log("Login success", response.data);
+      toast.success("Login success");
+      router.push("/profile");
+    } catch (error: any) {
+
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (user.email.length > 0 && user.password.length > 0) {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
+    }
+  }, [user]);
 
   return (
     <form className="">
@@ -51,29 +71,18 @@ function Login({}: Props) {
           value={user.password}
           onChange={(e) => setUser({ ...user, password: e.target.value })}
         />
-          <Link
-            href="/forgot-password"
-            className="text-blue-500 hover:text-blue-600 text-[10px] font-semibold"
-          >
-            Forgot Password?
-          </Link>
+        <Link
+          href="/forgot-password"
+          className="text-blue-500 hover:text-blue-600 text-[10px] font-semibold"
+        >
+          Forgot Password?
+        </Link>
       </div>
-      {/*  
-      <div className="mb-4">
-        <label className="flex items-center">
-          <input
-            className="mr-2 leading-tight"
-            type="checkbox"
-            name="rememberMe"
-  
-          />
-          <span className="text-sm">Remember me</span>
-        </label>
-      </div>
-      */}
       <div className="flex items-center justify-between">
         <button
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          onClick={onLogin}
+          disabled={buttonDisabled}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50 disabled:cursor-not-allowed"
           type="button"
         >
           Login
