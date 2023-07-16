@@ -7,7 +7,7 @@ This repository contains the code and resources for the Fullstack Course on Next
 The project is built using the following technologies:
 
 - ![TypeScript](https://img.icons8.com/color/48/000000/typescript.png) TypeScript
-- ![Tailwind CSS](https://img.icons8.com/color/48/000000/tailwind-css.png) Tailwind CSS
+- ![Tailwind CSS] Tailwind CSS
 - ![Axios](https://img.icons8.com/color/48/000000/axios.png) Axios
 - ![BcryptJS](https://img.icons8.com/color/48/000000/lock.png) BcryptJS
 - ![NodeMailer](https://img.icons8.com/color/48/000000/email.png) NodeMailer
